@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ww5-Jc-rKd">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--Image View Controller-->
+        <scene sceneID="QKn-kf-PcC">
+            <objects>
+                <viewController id="ww5-Jc-rKd" customClass="ImageViewController" customModule="TheFinalAssignment" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="h2P-bV-Lkf"/>
+                        <viewControllerLayoutGuide type="bottom" id="Nwm-Ug-Fxp"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="M1f-Rl-MuN">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="pRs-OM-YhW">
+                                <rect key="frame" x="290" y="290" width="20" height="20"/>
+                            </activityIndicatorView>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1x6-d2-3hN">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="BOz-n7-6Ab" appends="YES" id="Zc3-ZZ-56X"/>
+                                    <outletCollection property="gestureRecognizers" destination="6VO-qE-Zdk" appends="YES" id="vOq-rZ-zpd"/>
+                                </connections>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="1x6-d2-3hN" firstAttribute="bottom" secondItem="Nwm-Ug-Fxp" secondAttribute="top" id="MBO-rc-YQK"/>
+                            <constraint firstItem="1x6-d2-3hN" firstAttribute="leading" secondItem="M1f-Rl-MuN" secondAttribute="leading" id="W2j-xK-OEy"/>
+                            <constraint firstAttribute="trailing" secondItem="1x6-d2-3hN" secondAttribute="trailing" id="Z2o-DN-1Xh"/>
+                            <constraint firstItem="pRs-OM-YhW" firstAttribute="centerX" secondItem="1x6-d2-3hN" secondAttribute="centerX" id="bjv-h3-7CV"/>
+                            <constraint firstItem="1x6-d2-3hN" firstAttribute="top" secondItem="M1f-Rl-MuN" secondAttribute="top" id="xGr-RJ-MAZ"/>
+                            <constraint firstItem="pRs-OM-YhW" firstAttribute="centerY" secondItem="1x6-d2-3hN" secondAttribute="centerY" id="z5S-r7-Apg"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="scrollView" destination="1x6-d2-3hN" id="Yk8-rn-kpz"/>
+                        <outlet property="spinner" destination="pRs-OM-YhW" id="oRf-AG-87r"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rcZ-W1-lgh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="BOz-n7-6Ab">
+                    <connections>
+                        <action selector="longPressToSaveImage:" destination="ww5-Jc-rKd" id="URW-dR-kdr"/>
+                    </connections>
+                </pongPressGestureRecognizer>
+                <tapGestureRecognizer id="6VO-qE-Zdk">
+                    <connections>
+                        <action selector="doubleTap:" destination="ww5-Jc-rKd" id="cWH-EP-Dnb"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="681" y="505"/>
+        </scene>
+    </scenes>
+</document>
