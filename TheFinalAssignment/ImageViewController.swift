@@ -28,6 +28,10 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
   
   @IBAction func longPressToSaveImage(sender: UILongPressGestureRecognizer) {
     if sender.state == .Began{
+      //使用guard statement 如果图片为空 返回
+      guard  image != nil else {
+        return
+      }
       let alert = UIAlertController(title: nil, message: "保存图片", preferredStyle: .Alert)
       alert.addAction(UIAlertAction(title: "取消", style: .Cancel, handler: nil))
       alert.addAction(UIAlertAction(title: "保存", style: .Default){
@@ -67,7 +71,8 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
 //    
 //  }
   
-  //黑框显示 逐渐消失的动画  这里出发了viewDidLayoutSubview 所以 图片会调整 要修改
+  //黑框显示 逐渐消失的动画  这里触发了viewDidLayoutSubview 所以 图片会调整 要修改
+  //算了 不修改了
   // 位置要调整
   private func messageSaveToAblum(success: Bool){
     let showView = UIView()
@@ -80,7 +85,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
     
     let msgLabel = UILabel()
     msgLabel.frame.origin = CGPointMake(10, 5)
-    msgLabel.text = "成功保存 😉"
+    msgLabel.text = success ? "成功保存 😉" : "保存失败 😳"
     msgLabel.textColor = UIColor.whiteColor()
     msgLabel.textAlignment = .Center
     msgLabel.backgroundColor = UIColor.clearColor()
@@ -88,7 +93,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
     msgLabel.sizeToFit()
     showView.addSubview(msgLabel)
     
-    showView.frame = CGRectMake((view.frame.width - msgLabel.frame.width - 20) / 2, view.frame.height - 200, msgLabel.frame.width + 20, msgLabel.frame.height + 10)
+    showView.frame = CGRectMake((view.frame.width - msgLabel.frame.width - 20) / 2, (view.frame.height - msgLabel.frame.height)/2, msgLabel.frame.width + 20, msgLabel.frame.height + 10)
     
     UIView.animateWithDuration(3, animations: {
         showView.alpha = 0
@@ -101,8 +106,10 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
   }
   
   @IBAction func doubleTap(sender: UITapGestureRecognizer) {
+    guard image != nil else{
+      return
+    }
     sender.numberOfTapsRequired = 2
-  
     if scrollView.zoomScale > scrollView.minimumZoomScale{
       scrollView.setZoomScale(scrollView.minimumZoomScale, animated: true)
     } else {
