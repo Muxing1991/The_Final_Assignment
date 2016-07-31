@@ -48,7 +48,55 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
   }
 
   //通知栏 显示保存成功与否
-  private func messageSaveToAblum(succelss: Bool){
+  //使用UILocalNotification fireData: 设置激发时间 alertBody: 设置内容
+  // timeZone: 设置激发时区  soundName: 设置声音
+  //applicationBadgeNumber: 设置图标的通知数 现在没啥卵用
+  //使用scheduleLocalNotification 将 通知加入队列即可
+  
+  //经实验 本地通知只能在app在后台时才能以横幅的形式展现
+//  private func messageSaveToAblum(succelss: Bool){
+//    let localNotifcation = UILocalNotification()
+//    localNotifcation.fireDate = NSDate(timeIntervalSinceNow: 5)
+//    localNotifcation.alertBody = succelss ? "保存成功 😉" : "保存失败 😳"
+//    localNotifcation.timeZone = NSTimeZone.defaultTimeZone()
+//    localNotifcation.soundName = UILocalNotificationDefaultSoundName
+//    
+//    //TODO: 图标的完成
+//    //localNotifcation.applicationIconBadgeNumber = UIApplication.sharedApplication().applicationIconBadgeNumber + 1
+//    UIApplication.sharedApplication().scheduleLocalNotification(localNotifcation)
+//    
+//  }
+  
+  //黑框显示 逐渐消失的动画  这里出发了viewDidLayoutSubview 所以 图片会调整 要修改
+  // 位置要调整
+  private func messageSaveToAblum(success: Bool){
+    let showView = UIView()
+    showView.backgroundColor = UIColor.blackColor()
+    showView.frame = CGRectMake(1, 1, 1, 1)
+    showView.alpha = 1.0
+    showView.layer.cornerRadius = 5.0
+    showView.layer.masksToBounds = true
+    view.addSubview(showView)
+    
+    let msgLabel = UILabel()
+    msgLabel.frame.origin = CGPointMake(10, 5)
+    msgLabel.text = "成功保存 😉"
+    msgLabel.textColor = UIColor.whiteColor()
+    msgLabel.textAlignment = .Center
+    msgLabel.backgroundColor = UIColor.clearColor()
+    msgLabel.font = UIFont.boldSystemFontOfSize(20)
+    msgLabel.sizeToFit()
+    showView.addSubview(msgLabel)
+    
+    showView.frame = CGRectMake((view.frame.width - msgLabel.frame.width - 20) / 2, view.frame.height - 200, msgLabel.frame.width + 20, msgLabel.frame.height + 10)
+    
+    UIView.animateWithDuration(3, animations: {
+        showView.alpha = 0
+    }){ (_) in
+      showView.removeFromSuperview()
+    }
+      
+    
     
   }
   
