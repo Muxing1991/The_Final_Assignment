@@ -24,7 +24,6 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <gestureRecognizers/>
                                 <connections>
-                                    <outletCollection property="gestureRecognizers" destination="BOz-n7-6Ab" appends="YES" id="Zc3-ZZ-56X"/>
                                     <outletCollection property="gestureRecognizers" destination="6VO-qE-Zdk" appends="YES" id="vOq-rZ-zpd"/>
                                 </connections>
                             </scrollView>
@@ -45,11 +44,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rcZ-W1-lgh" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="BOz-n7-6Ab">
-                    <connections>
-                        <action selector="longPressToSaveImage:" destination="ww5-Jc-rKd" id="URW-dR-kdr"/>
-                    </connections>
-                </pongPressGestureRecognizer>
                 <tapGestureRecognizer id="6VO-qE-Zdk">
                     <connections>
                         <action selector="doubleTap:" destination="ww5-Jc-rKd" id="cWH-EP-Dnb"/>
