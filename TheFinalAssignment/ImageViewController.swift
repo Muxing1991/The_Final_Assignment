@@ -18,31 +18,35 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
       //imageView就是书桌
       scrollView.contentSize = imageView.frame.size
       scrollView.maximumZoomScale = 5
+      //设置scrollView不要延缓touch
+      scrollView.delaysContentTouches = false
     }
   }
   
   @IBOutlet weak var spinner: UIActivityIndicatorView!
   
+  //MARK: - saveImageButton
+  var saveImageButton: UIButton = {
+    let sib = UIButton()
+    sib.setTitle("保存", forState: .Normal)
+    sib.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+    sib.setTitleColor(UIColor.grayColor(), forState: .Highlighted)
+    sib.backgroundColor = UIColor.lightGrayColor()
+    sib.layer.cornerRadius = 5.0
+    sib.layer.masksToBounds = true
+    sib.frame = CGRect(x: 0, y: 0, width: 1, height:1)
+    //#selector  来自self ImageViewController.saveImage 触发条件为TouchDown
+    sib.addTarget(nil, action: #selector(ImageViewController.saveImage), forControlEvents: .TouchDown)
+    
+    return sib
+  }()
   
-  //MARK: - Gesture
-  
-  @IBAction func longPressToSaveImage(sender: UILongPressGestureRecognizer) {
-    if sender.state == .Began{
-      //使用guard statement 如果图片为空 返回
-      guard  image != nil else {
-        return
-      }
-      let alert = UIAlertController(title: nil, message: "保存图片", preferredStyle: .Alert)
-      alert.addAction(UIAlertAction(title: "取消", style: .Cancel, handler: nil))
-      alert.addAction(UIAlertAction(title: "保存", style: .Default){
-        (alert) in
-        UIImageWriteToSavedPhotosAlbum(self.image!, self, #selector(ImageViewController.image(_:didFinishSavingWithError:contentInfo:)), nil)
-        })
-      presentViewController(alert, animated: true, completion: nil)
-    }
+  func saveImage(){
+    
+    UIImageWriteToSavedPhotosAlbum(self.image!, self, #selector(ImageViewController.image(_:didFinishSavingWithError:contentInfo:)), nil)
   }
   
-  
+
   func image(image: UIImage, didFinishSavingWithError: NSError?, contentInfo: AnyObject){
     if let error = didFinishSavingWithError{
       print(error)
@@ -51,26 +55,6 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
     }
   }
 
-  //通知栏 显示保存成功与否
-  //使用UILocalNotification fireData: 设置激发时间 alertBody: 设置内容
-  // timeZone: 设置激发时区  soundName: 设置声音
-  //applicationBadgeNumber: 设置图标的通知数 现在没啥卵用
-  //使用scheduleLocalNotification 将 通知加入队列即可
-  
-  //经实验 本地通知只能在app在后台时才能以横幅的形式展现
-//  private func messageSaveToAblum(succelss: Bool){
-//    let localNotifcation = UILocalNotification()
-//    localNotifcation.fireDate = NSDate(timeIntervalSinceNow: 5)
-//    localNotifcation.alertBody = succelss ? "保存成功 😉" : "保存失败 😳"
-//    localNotifcation.timeZone = NSTimeZone.defaultTimeZone()
-//    localNotifcation.soundName = UILocalNotificationDefaultSoundName
-//    
-//    //TODO: 图标的完成
-//    //localNotifcation.applicationIconBadgeNumber = UIApplication.sharedApplication().applicationIconBadgeNumber + 1
-//    UIApplication.sharedApplication().scheduleLocalNotification(localNotifcation)
-//    
-//  }
-  
   //黑框显示 逐渐消失的动画  这里触发了viewDidLayoutSubview 所以 图片会调整 要修改
   //算了 不修改了
   // 位置要调整
@@ -104,6 +88,8 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
     
     
   }
+  
+  //MARK: - Gesture
   
   @IBAction func doubleTap(sender: UITapGestureRecognizer) {
     guard image != nil else{
@@ -148,6 +134,9 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
     }
     set{
       imageView.image = newValue
+      if newValue != nil {
+        view.addSubview(saveImageButton)
+      }
       aspectratio = newValue?.aspectratio
       imageView.sizeToFit()
       //设定滑动的区域为图片的大小
@@ -196,7 +185,8 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
             if let data = imageData{
               self.image = UIImage(data: data)
             }else {
-              print("error can't get image data")
+              //print("error can't get image data")
+              //改成类似系统应用的灰色字体提示
             }
           }
           self.spinner.stopAnimating()
@@ -213,11 +203,11 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
   override func viewDidLoad() {
     super.viewDidLoad()
     scrollView.addSubview(imageView)
-    imageURL = NSURL(string: "http://p1.pichost.me/i/64/1884418.jpg")
+    //imageURL = NSURL(string: "http://p1.pichost.me/i/64/1884418.jpg")
     //imageURL = NSURL(string: "http://i7.umei.cc//img2012/2016/05/21/010Flash20141118/10.jpg")
     //imageURL = NSURL(string: "https://www.apple.com/cn/home/images/heros/apple_watch_trio_medium_2x.jpg")
     //image = UIImage(named: "apple_watch_trio_medium_2x")
-    //imageURL = NSURL(string: "http://images.apple.com/v/iphone/home/s/home/images/why_iphone_bg_large_2x.jpg")
+    imageURL = NSURL(string: "http://images.apple.com/v/iphone/home/s/home/images/why_iphone_bg_large_2x.jpg")
   }
   
   override func viewWillAppear(animated: Bool) {
@@ -235,6 +225,8 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
       scrollView.setZoomScale(scrollCurrentScale(), animated: true)
       //居中处理
       setScorllImageViewCenter()
+      //重新设置保存按钮的位置 。。。。 学习怎么用代码来实现autolayout！
+      saveImageButton.frame = CGRect(x: UIScreen.mainScreen().bounds.width - 86, y: UIScreen.mainScreen().bounds.height - 60, width: 66, height: 45)
     }
   }
   
