@@ -136,6 +136,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
       imageView.image = newValue
       if newValue != nil {
         view.addSubview(saveImageButton)
+        msgLabel.removeFromSuperview()
       }
       aspectratio = newValue?.aspectratio
       imageView.sizeToFit()
@@ -174,6 +175,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
   //这是用来展示图片的View
   private var imageView = UIImageView()
   
+  private var msgLabel = UILabel()
   //MARK: Method
   private func fetchImageFromURL(){
     if let url = imageURL{
@@ -187,6 +189,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
             }else {
               //print("error can't get image data")
               //改成类似系统应用的灰色字体提示
+              self.displayGrayNotification("无法下载图片 请检查网络连接")
             }
           }
           self.spinner.stopAnimating()
@@ -195,6 +198,17 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
     }
   }
   
+  
+  private func displayGrayNotification(msg: String){
+    msgLabel.text = msg
+    msgLabel.textColor = UIColor.lightGrayColor()
+    msgLabel.font = UIFont(name: "Arial", size: 34)
+    msgLabel.backgroundColor = UIColor.clearColor()
+    msgLabel.sizeToFit()
+    msgLabel.frame.origin = scrollView.center
+    msgLabel.frame.origin.x -= msgLabel.frame.width/2
+    scrollView.addSubview(msgLabel)
+  }
   
   
   
