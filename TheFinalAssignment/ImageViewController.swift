@@ -242,6 +242,8 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
       //重新设置保存按钮的位置 。。。。 学习怎么用代码来实现autolayout！
       saveImageButton.frame = CGRect(x: UIScreen.mainScreen().bounds.width - 86, y: UIScreen.mainScreen().bounds.height - 60, width: 66, height: 45)
     }
+    
+    
   }
   
   
