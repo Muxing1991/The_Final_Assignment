@@ -14,6 +14,7 @@ class ProvinceTableViewCell: UITableViewCell {
   
   
   @IBOutlet weak var backgroundImage: UIImageView!
+
   
   
   
