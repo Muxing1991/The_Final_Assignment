@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Image View Controller-->
@@ -56,34 +57,57 @@
         <scene sceneID="qWj-r5-1C3">
             <objects>
                 <tableViewController id="AMU-WH-Xd5" customClass="ProvinceTableViewController" customModule="TheFinalAssignment" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="7k9-li-hV7">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="185" sectionHeaderHeight="28" sectionFooterHeight="28" id="7k9-li-hV7">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="province" textLabel="1Iy-OP-gwB" detailTextLabel="sv1-0K-W3Y" style="IBUITableViewCellStyleSubtitle" id="6bE-0C-vzL">
-                                <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="province" rowHeight="185" id="6bE-0C-vzL" customClass="ProvinceTableViewCell" customModule="TheFinalAssignment" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="600" height="185"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6bE-0C-vzL" id="rAn-8X-ght">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" tableViewCell="6bE-0C-vzL" id="rAn-8X-ght">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="184.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1Iy-OP-gwB">
-                                            <rect key="frame" x="15" y="5" width="32" height="20"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Riw-Oa-9ti">
+                                            <rect key="frame" x="0.0" y="12" width="600" height="160"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Province" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2cL-Jd-5tf" customClass="CellUILabel" customModule="TheFinalAssignment" customModuleProvider="target">
+                                            <rect key="frame" x="250" y="76" width="101" height="33"/>
+                                            <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="0.48876616379999999" colorSpace="calibratedRGB"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="sv1-0K-W3Y">
-                                            <rect key="frame" x="15" y="25" width="31" height="14"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="paddingLeft">
+                                                    <real key="value" value="4"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="paddingRight">
+                                                    <real key="value" value="4"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="paddingTop">
+                                                    <real key="value" value="2"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="paddingBottom">
+                                                    <real key="value" value="2"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
                                         </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailingMargin" secondItem="Riw-Oa-9ti" secondAttribute="trailing" constant="-8" id="Azg-VH-eQH"/>
+                                        <constraint firstItem="Riw-Oa-9ti" firstAttribute="top" secondItem="rAn-8X-ght" secondAttribute="topMargin" constant="4" id="a4t-DO-f9y"/>
+                                        <constraint firstItem="Riw-Oa-9ti" firstAttribute="leading" secondItem="rAn-8X-ght" secondAttribute="leadingMargin" constant="-8" id="ddF-D7-gfg"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="Riw-Oa-9ti" secondAttribute="bottom" constant="4" id="oX7-fZ-WkO"/>
+                                        <constraint firstItem="2cL-Jd-5tf" firstAttribute="centerX" secondItem="Riw-Oa-9ti" secondAttribute="centerX" id="pW9-wx-BVd"/>
+                                        <constraint firstItem="2cL-Jd-5tf" firstAttribute="centerY" secondItem="Riw-Oa-9ti" secondAttribute="centerY" id="xOX-Zb-hmD"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="backgroundImage" destination="Riw-Oa-9ti" id="ChI-QK-JhW"/>
+                                    <outlet property="provinceNameLabel" destination="2cL-Jd-5tf" id="ibX-7E-1zA"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
