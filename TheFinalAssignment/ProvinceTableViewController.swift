@@ -19,6 +19,7 @@ class ProvinceTableViewController: UITableViewController {
   //MARK: - Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
+    tableView.rowHeight = view.frame.height / CGFloat(Constants.numOfCellInPerScreen)
     configureProvinceData()
   }
   
@@ -52,14 +53,21 @@ class ProvinceTableViewController: UITableViewController {
   }
   
   
-   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-   let cell = tableView.dequeueReusableCellWithIdentifier("province", forIndexPath: indexPath)
-   
-   cell.textLabel?.text = provinceList[indexPath.row]
-   
-   return cell
-   }
+  override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+     let cell = tableView.dequeueReusableCellWithIdentifier("province", forIndexPath: indexPath) as! ProvinceTableViewCell
+      cell.bgImage = UIImage(named: "pic1")
+      cell.name = provinceList[indexPath.row]
+      print(cell.name)
+      //选中后 不变色
+      cell.selectionStyle = .None
+      return cell
+  }
 
+  
+  //MARK: - Constants
+  private class Constants{
+    static let numOfCellInPerScreen = 4
+  }
   
   /*
    // Override to support conditional editing of the table view.
