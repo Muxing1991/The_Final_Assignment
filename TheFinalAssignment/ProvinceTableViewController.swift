@@ -19,7 +19,7 @@ class ProvinceTableViewController: UITableViewController {
   //MARK: - Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
-    tableView.rowHeight = view.frame.height / CGFloat(Constants.numOfCellInPerScreen)
+    tableView.rowHeight = view.frame.height / CGFloat(Constants.numOfCellInPerScreen) - Constants.cellSpace
     configureProvinceData()
   }
   
@@ -40,26 +40,49 @@ class ProvinceTableViewController: UITableViewController {
     
   }
   
+    
   // MARK: - Table view data source
+  
+  //how to add spacing between cells
+  //#1 from stack overflow
+  //设置numberofsection为数组长度 rowsinsection 为 1
+  //设置heightForHeaderInsection 为想要的高度  
+  //设置viewforHeaderinsection 为一个clear颜色的UIView
   
   override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
  
-    return 1
+    //return 1
+    return provinceList.count
   }
   
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     
-    return provinceList.count
+    //return provinceList.count
+    return 1
+  }
+  
+  
+  override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    //有5个point的space
+    return Constants.cellSpace
+  }
+  
+  override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    let sectionBG = UIView()
+    sectionBG.backgroundColor = UIColor.clearColor()
+    return sectionBG
   }
   
   
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
      let cell = tableView.dequeueReusableCellWithIdentifier("province", forIndexPath: indexPath) as! ProvinceTableViewCell
       cell.bgImage = UIImage(named: "pic1")
-      cell.name = provinceList[indexPath.row]
-      print(cell.name)
+      cell.name = provinceList[indexPath.section]
       //选中后 不变色
       cell.selectionStyle = .None
+      cell.backgroundImage.layer.cornerRadius = 8
+      cell.backgroundImage.clipsToBounds = true
+    
       return cell
   }
 
@@ -67,6 +90,7 @@ class ProvinceTableViewController: UITableViewController {
   //MARK: - Constants
   private class Constants{
     static let numOfCellInPerScreen = 4
+    static let cellSpace: CGFloat = 4
   }
   
   /*

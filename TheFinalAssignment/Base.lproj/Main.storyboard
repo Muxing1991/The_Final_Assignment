@@ -70,7 +70,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Riw-Oa-9ti">
-                                            <rect key="frame" x="0.0" y="12" width="600" height="160"/>
+                                            <rect key="frame" x="8" y="0.0" width="584" height="184.5"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Province" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2cL-Jd-5tf" customClass="CellUILabel" customModule="TheFinalAssignment" customModuleProvider="target">
@@ -96,10 +96,10 @@
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="trailingMargin" secondItem="Riw-Oa-9ti" secondAttribute="trailing" constant="-8" id="Azg-VH-eQH"/>
-                                        <constraint firstItem="Riw-Oa-9ti" firstAttribute="top" secondItem="rAn-8X-ght" secondAttribute="topMargin" constant="4" id="a4t-DO-f9y"/>
-                                        <constraint firstItem="Riw-Oa-9ti" firstAttribute="leading" secondItem="rAn-8X-ght" secondAttribute="leadingMargin" constant="-8" id="ddF-D7-gfg"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="Riw-Oa-9ti" secondAttribute="bottom" constant="4" id="oX7-fZ-WkO"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="Riw-Oa-9ti" secondAttribute="trailing" id="Azg-VH-eQH"/>
+                                        <constraint firstItem="Riw-Oa-9ti" firstAttribute="top" secondItem="rAn-8X-ght" secondAttribute="topMargin" constant="-8" id="a4t-DO-f9y"/>
+                                        <constraint firstItem="Riw-Oa-9ti" firstAttribute="leading" secondItem="rAn-8X-ght" secondAttribute="leadingMargin" id="ddF-D7-gfg"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="Riw-Oa-9ti" secondAttribute="bottom" constant="-8" id="oX7-fZ-WkO"/>
                                         <constraint firstItem="2cL-Jd-5tf" firstAttribute="centerX" secondItem="Riw-Oa-9ti" secondAttribute="centerX" id="pW9-wx-BVd"/>
                                         <constraint firstItem="2cL-Jd-5tf" firstAttribute="centerY" secondItem="Riw-Oa-9ti" secondAttribute="centerY" id="xOX-Zb-hmD"/>
                                     </constraints>
