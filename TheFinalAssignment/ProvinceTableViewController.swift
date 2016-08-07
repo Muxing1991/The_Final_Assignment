@@ -21,6 +21,7 @@ class ProvinceTableViewController: UITableViewController {
     super.viewDidLoad()
     tableView.rowHeight = view.frame.height / CGFloat(Constants.numOfCellInPerScreen) - Constants.cellSpace
     configureProvinceData()
+    self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Provinces", style: .Plain, target: self, action: nil)
   }
   
   private func configureProvinceData(){
@@ -41,7 +42,7 @@ class ProvinceTableViewController: UITableViewController {
   }
   
     
-  // MARK: - Table view data source
+  // MARK: - Table view data source & UITableViewDelegate
   
   //how to add spacing between cells
   //#1 from stack overflow
@@ -76,21 +77,32 @@ class ProvinceTableViewController: UITableViewController {
   
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
      let cell = tableView.dequeueReusableCellWithIdentifier("province", forIndexPath: indexPath) as! ProvinceTableViewCell
-      cell.bgImage = UIImage(named: "pic1")
       cell.name = provinceList[indexPath.section]
+     cell.bgImage = UIImage(named: "\(cell.name)")
       //选中后 不变色
       cell.selectionStyle = .None
       cell.backgroundImage.layer.cornerRadius = 8
       cell.backgroundImage.clipsToBounds = true
-    
       return cell
+  }
+  
+  //MARK: - Segue
+  
+  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    if segue.identifier == Constants.displayProvinceImage{
+      if let ivc = segue.destinationViewController as? ImageViewController,
+      let province = sender as? ProvinceTableViewCell{
+        ivc.image = province.bgImage
+      }
+    }
   }
 
   
   //MARK: - Constants
   private class Constants{
-    static let numOfCellInPerScreen = 4
+    static let numOfCellInPerScreen = 3
     static let cellSpace: CGFloat = 4
+    static let displayProvinceImage = "displayProvinceImage"
   }
   
   /*
