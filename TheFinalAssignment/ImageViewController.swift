@@ -31,13 +31,12 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
     sib.setTitle("保存", forState: .Normal)
     sib.setTitleColor(UIColor.whiteColor(), forState: .Normal)
     sib.setTitleColor(UIColor.grayColor(), forState: .Highlighted)
-    sib.backgroundColor = UIColor.lightGrayColor()
+    sib.backgroundColor = UIColor.init(white: 0.667, alpha: 0.5)//LightGrayColor
     sib.layer.cornerRadius = 5.0
     sib.layer.masksToBounds = true
     sib.frame = CGRect(x: 0, y: 0, width: 1, height:1)
     //#selector  来自self ImageViewController.saveImage 触发条件为TouchDown
     sib.addTarget(nil, action: #selector(ImageViewController.saveImage), forControlEvents: .TouchDown)
-    
     return sib
   }()
   
@@ -221,7 +220,9 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
     //imageURL = NSURL(string: "http://i7.umei.cc//img2012/2016/05/21/010Flash20141118/10.jpg")
     //imageURL = NSURL(string: "https://www.apple.com/cn/home/images/heros/apple_watch_trio_medium_2x.jpg")
     //image = UIImage(named: "apple_watch_trio_medium_2x")
-    imageURL = NSURL(string: "http://images.apple.com/v/iphone/home/s/home/images/why_iphone_bg_large_2x.jpg")
+    //imageURL = NSURL(string: "http://images.apple.com/v/iphone/home/s/home/images/why_iphone_bg_large_2x.jpg")
+//    self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Provinces", style: .Plain, target: self, action: nil)//子视图中设置 没有返回的小于号
+    
   }
   
   override func viewWillAppear(animated: Bool) {
