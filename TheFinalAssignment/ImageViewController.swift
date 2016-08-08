@@ -141,8 +141,8 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
       imageView.sizeToFit()
       //设定滑动的区域为图片的大小
       scrollView.contentSize = imageView.frame.size
-      //设置初始的比例
-      scrollView.setZoomScale(scrollCurrentScale(), animated: true)
+      //设置初始的比例  设置false的animated 在变化比例时不需要动画 更符合zhihu之类
+      scrollView.setZoomScale(scrollCurrentScale(), animated: false)
       //居中处理
       setScorllImageViewCenter()
       spinner.stopAnimating()
@@ -216,13 +216,6 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
   override func viewDidLoad() {
     super.viewDidLoad()
     scrollView.addSubview(imageView)
-    //imageURL = NSURL(string: "http://p1.pichost.me/i/64/1884418.jpg")
-    //imageURL = NSURL(string: "http://i7.umei.cc//img2012/2016/05/21/010Flash20141118/10.jpg")
-    //imageURL = NSURL(string: "https://www.apple.com/cn/home/images/heros/apple_watch_trio_medium_2x.jpg")
-    //image = UIImage(named: "apple_watch_trio_medium_2x")
-    //imageURL = NSURL(string: "http://images.apple.com/v/iphone/home/s/home/images/why_iphone_bg_large_2x.jpg")
-//    self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Provinces", style: .Plain, target: self, action: nil)//子视图中设置 没有返回的小于号
-    
   }
   
   override func viewWillAppear(animated: Bool) {
@@ -237,7 +230,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
     super.viewDidLayoutSubviews()
     if imageView.image != nil{
       //设置初始的比例
-      scrollView.setZoomScale(scrollCurrentScale(), animated: true)
+      scrollView.setZoomScale(scrollCurrentScale(), animated: false)
       //居中处理
       setScorllImageViewCenter()
       //重新设置保存按钮的位置 。。。。 学习怎么用代码来实现autolayout！
