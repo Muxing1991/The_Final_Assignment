@@ -90,18 +90,39 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
   
   //MARK: - Gesture
   
-  @IBAction func doubleTap(sender: UITapGestureRecognizer) {
-    guard image != nil else{
+  private func addTapEvent(){
+    let doubleTap = UITapGestureRecognizer(target: self, action: #selector(ImageViewController.doubleTapToZoomToRect))
+    doubleTap.numberOfTapsRequired = 2
+    doubleTap.numberOfTouchesRequired = 1
+    
+    let singleTap = UITapGestureRecognizer(target: self, action: #selector(ImageViewController.singleTapToHideNavBar))
+    singleTap.numberOfTouchesRequired = 1
+    singleTap.numberOfTouchesRequired = 1
+    singleTap.requireGestureRecognizerToFail(doubleTap)
+    //添加到self.view中
+    self.view.addGestureRecognizer(doubleTap)
+    self.view.addGestureRecognizer(singleTap)
+  }
+ 
+  @objc private func doubleTapToZoomToRect(sender: UITapGestureRecognizer){
+    guard image != nil else {
       return
     }
-    sender.numberOfTapsRequired = 2
-    if scrollView.zoomScale > scrollView.minimumZoomScale{
-      scrollView.setZoomScale(scrollView.minimumZoomScale, animated: true)
-    } else {
+    //更新 设置当内容的size大于等于边界时 就缩放到适合屏幕的大小
+    //否则 放大两倍
+    if scrollView.contentSize.height > UIScreen.mainScreen().bounds.height || scrollView.contentSize.width > UIScreen.mainScreen().bounds.width{
+      scrollView.setZoomScale(scrollCurrentScale(), animated: true)
+    }else {
       let newScale = scrollView.zoomScale * 2
       let zoomRect = zoomRectForScale(newScale, withCenter: sender.locationInView(scrollView))
       scrollView.zoomToRect(zoomRect, animated: true)
     }
+
+  }
+  
+  @objc private func singleTapToHideNavBar(sender: UITapGestureRecognizer){
+    isNavBarHidden = !isNavBarHidden
+    self.navigationController?.setNavigationBarHidden(isNavBarHidden, animated: true)
   }
   
   private func zoomRectForScale(scale: CGFloat, withCenter center: CGPoint) -> CGRect{
@@ -149,16 +170,17 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
     }
   }
   
+  
   private func scrollCurrentScale() -> CGFloat{
     if let image = image,aspectratio = aspectratio{
       //如果图片是高窄的
-      if aspectratio >= 1 && image.size.height > scrollView.frame.height{
-        let zoomToHeight = scrollView.frame.height / image.size.height
+      if aspectratio >= 1 && image.size.height > UIScreen.mainScreen().bounds.height{
+        let zoomToHeight = UIScreen.mainScreen().bounds.height / image.size.height
         scrollView.minimumZoomScale = zoomToHeight
         return zoomToHeight
-      } else if aspectratio < 1 && image.size.width > scrollView.frame.width{
+      } else if aspectratio < 1 && image.size.width > UIScreen.mainScreen().bounds.width{
         //图片是宽矮的
-        let zoomToWidth =  scrollView.frame.width / image.size.width
+        let zoomToWidth =  UIScreen.mainScreen().bounds.width / image.size.width
         scrollView.minimumZoomScale = zoomToWidth
         return zoomToWidth
       }
@@ -166,7 +188,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
     }
     return 1
   }
-  
+
   
   
   //图片纵横比 高／宽
@@ -197,6 +219,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
     }
   }
   
+  var isNavBarHidden = false
   
   private func displayGrayNotification(msg: String){
     msgLabel.text = msg
@@ -209,13 +232,17 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
     scrollView.addSubview(msgLabel)
   }
   
-  
-  
+  //MARK: - UIViewController Method
+  //隐藏系统的状态栏  电量 时间 信号等信息
+  override func prefersStatusBarHidden() -> Bool {
+    return true
+  }
   
   //MARK: - Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
     scrollView.addSubview(imageView)
+    addTapEvent()
   }
   
   override func viewWillAppear(animated: Bool) {
@@ -223,11 +250,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
     if image == nil{
       fetchImageFromURL()
     }
-  }
-  
-  //屏幕旋转后 再次居中 适应比例
-  override func viewDidLayoutSubviews() {
-    super.viewDidLayoutSubviews()
+    
     if imageView.image != nil{
       //设置初始的比例
       scrollView.setZoomScale(scrollCurrentScale(), animated: false)
@@ -236,10 +259,28 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
       //重新设置保存按钮的位置 。。。。 学习怎么用代码来实现autolayout！
       saveImageButton.frame = CGRect(x: UIScreen.mainScreen().bounds.width - 86, y: UIScreen.mainScreen().bounds.height - 60, width: 66, height: 45)
     }
-    
-    
   }
   
+
+  
+  //屏幕旋转后 再次居中 适应比例 // 放弃在这里调整 采用UIScreen来获取设备的size
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+
+  }
+  
+  
+  override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+    if imageView.image != nil{
+      //依据iOS照片app  放弃在旋转后 调整缩放
+      //scrollView.setZoomScale(scrollCurrentScale(), animated: false)
+      
+      //居中处理
+      setScorllImageViewCenter()
+      //重新设置保存按钮的位置 。。。。 学习怎么用代码来实现autolayout！
+      saveImageButton.frame = CGRect(x: UIScreen.mainScreen().bounds.width - 86, y: UIScreen.mainScreen().bounds.height - 60, width: 66, height: 45)
+    }
+  }
   
   //MARK: - UIScrollViewDelegate
   func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
@@ -251,9 +292,10 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
     setScorllImageViewCenter()
   }
   
+  
   private func setScorllImageViewCenter(){
-    let boundWidth = scrollView.bounds.width
-    let boundHeight = scrollView.bounds.height
+    let boundWidth = UIScreen.mainScreen().bounds.width
+    let boundHeight = UIScreen.mainScreen().bounds.height
     let contentWidth = scrollView.contentSize.width
     let contentHeight = scrollView.contentSize.height
     //在图片被缩小到screen以内时 才修正offset
