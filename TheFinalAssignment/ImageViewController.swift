@@ -110,7 +110,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
     }
     //更新 设置当内容的size大于等于边界时 就缩放到适合屏幕的大小
     //否则 放大两倍
-    if scrollView.contentSize.height >= UIScreen.mainScreen().bounds.height && scrollView.contentSize.width >= UIScreen.mainScreen().bounds.width{
+    if scrollView.contentSize.height > UIScreen.mainScreen().bounds.height || scrollView.contentSize.width > UIScreen.mainScreen().bounds.width{
       scrollView.setZoomScale(scrollCurrentScale(), animated: true)
     }else {
       let newScale = scrollView.zoomScale * 2
